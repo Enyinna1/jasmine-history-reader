@@ -170,6 +170,15 @@ public class History {
 			
 			});
 		
+
+		MenuItem mntmImportHistory = new MenuItem(menu_1, SWT.NONE);
+		mntmImportHistory.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				
+			}
+		});
+		mntmImportHistory.setText("Import History");
 		
 		MenuItem mntmExportHistory = new MenuItem(menu_1, SWT.NONE);
 		mntmExportHistory.setText("Export History");
