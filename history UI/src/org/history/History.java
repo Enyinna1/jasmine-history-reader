@@ -170,6 +170,7 @@ public class History {
 			
 			});
 		
+		
 		MenuItem mntmExportHistory = new MenuItem(menu_1, SWT.NONE);
 		mntmExportHistory.setText("Export History");
 		
@@ -480,6 +481,8 @@ public class History {
               break;
             display.syncExec (new Runnable () {
                 public void run () {	
+                	try
+                	{
 	    			if (item.contactuin.equals(items[0]))
 	    			{
 	    				 if (item.direction == 1)
@@ -493,6 +496,11 @@ public class History {
 	    					 styledText.append(item.message+"\n");
 	    				 }
 	    			}
+                	} 
+                	catch (ArrayIndexOutOfBoundsException e1)
+                	{
+                		e1.printStackTrace();
+                	}
                 }
              });
           }
