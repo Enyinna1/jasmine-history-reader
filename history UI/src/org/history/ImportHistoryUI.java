@@ -1,6 +1,7 @@
 package org.history;
 
 import org.eclipse.swt.widgets.Dialog;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.layout.GridLayout;
@@ -9,6 +10,8 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
 
 public class ImportHistoryUI extends Dialog {
 
@@ -49,7 +52,7 @@ public class ImportHistoryUI extends Dialog {
 	 */
 	private void createContents() {
 		shell = new Shell(getParent(), getStyle());
-		shell.setSize(379, 217);
+		shell.setSize(358, 209);
 		shell.setText(getText());
 		shell.setLayout(new GridLayout(11, false));
 		new Label(shell, SWT.NONE);
@@ -72,6 +75,18 @@ public class ImportHistoryUI extends Dialog {
 		text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, false, false, 9, 1));
 		
 		Button btnOpen = new Button(shell, SWT.CENTER);
+		btnOpen.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+		          DirectoryDialog dlg = new DirectoryDialog(shell);
+		          dlg.setText("Export history");
+		          dlg.setFilterPath("C:/");
+		          String selected = dlg.open();
+		          System.out.println(selected);		
+		          
+		          text.setText(selected);
+			}
+		});
 		GridData gd_btnOpen = new GridData(SWT.CENTER, SWT.CENTER, true, false, 1, 1);
 		gd_btnOpen.widthHint = 96;
 		btnOpen.setLayoutData(gd_btnOpen);
@@ -94,6 +109,50 @@ public class ImportHistoryUI extends Dialog {
 		
 		text_1 = new Text(shell, SWT.BORDER);
 		text_1.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 5, 1));
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		
+		Button btnImport = new Button(shell, SWT.NONE);
+		btnImport.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 1, 1));
+		btnImport.setText("Import");
+		
+		Button btnCancel = new Button(shell, SWT.NONE);
+		btnCancel.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent e) {
+				shell.setVisible(false);
+			}
+		});
+		btnCancel.setLayoutData(new GridData(SWT.CENTER, SWT.CENTER, false, false, 2, 1));
+		btnCancel.setText("Cancel");
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
+		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);
 		new Label(shell, SWT.NONE);

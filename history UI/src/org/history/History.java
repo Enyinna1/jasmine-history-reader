@@ -41,6 +41,7 @@ public class History {
 	protected static Shell shell;
 	Display display;
 	Search Search;
+	ImportHistoryUI ImportHistoryUI;
 	MenuItem mntmSearch_1;
 	MenuItem mntmFindNext;
 	List uinList;
@@ -175,7 +176,8 @@ public class History {
 		mntmImportHistory.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				
+				ImportHistoryUI dlg = new ImportHistoryUI(shell, SWT.CLOSE | SWT.BORDER | SWT.TITLE);
+				dlg.open();
 			}
 		});
 		mntmImportHistory.setText("Import History");
