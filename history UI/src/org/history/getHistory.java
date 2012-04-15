@@ -36,8 +36,6 @@ public class getHistory {
 	        		  contactuin = localDataInputStream.readUTF();
 	        		  contactuin = localDataInputStream.readUTF();
 	        	  	}
-	        	  // print contact uin
-//	        	  System.out.println(contactuin);
 	        	  // read length of hst/cache file. 4 bytes.
 		          int length = localDataInputStream.readInt();	                    
 		          if (length == 0)
@@ -98,6 +96,8 @@ public class getHistory {
 			            messageContainer.message = str2;
 			            messageContainer.date = l;
 			            messageContainer.isXtrazMessage = bool;
+			            
+			            // debug
 						if (messageContainer.direction == 1)
 						 {
 							System.out.println(messageContainer.contactuin + " " + "(" + getHistory.formatDate(messageContainer.date) +")");
@@ -108,6 +108,7 @@ public class getHistory {
 							 System.out.println(messageContainer.myuin + " " + "(" + getHistory.formatDate(messageContainer.date) +")");
 							 System.out.println(messageContainer.message);
 						 }
+						
 			            localVector2.add(messageContainer);
 			    		uhst = uhst + 14 + j;
 			    		

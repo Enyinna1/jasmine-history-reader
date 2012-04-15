@@ -22,10 +22,8 @@ public class ImportHistoryUI {
 	private Text text;
 
 /**
- * Class constructor that sets the parent shell and the styledText widget that
- * the dialog will search.
- *
- * @param parent	Shell 
+ * 
+ *  @param parent	Shell 
  *			The shell that is the parent of the dialog.
  */
 public ImportHistoryUI(Shell parent) {
