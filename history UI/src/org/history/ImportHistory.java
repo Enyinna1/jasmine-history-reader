@@ -148,8 +148,6 @@ public class ImportHistory {
 			int strlen = 0;
 			Date timestamp = null;
 			byte direction = 0;
-			boolean firstline = true;
-			
 			DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
 			
 			// 0d0a0d0a byte string - DOS new string ( needed to correctly parse multi-lined messages )
@@ -160,19 +158,12 @@ public class ImportHistory {
 				// this cycle is quite weird to understand O_o
 				// TODO refactor and optimize this shit
 				
-				//if string is empty - read new line
-				if (str == "")
-				{
-				str = localDataInputStream.readLine();
-				}
-				
-				// str2 contains next line - needed to correctly read multilined messages
-				else 
-				{
-					str = str2;
-				}
-				
-				// if str2 starts with 
+				//read new line
+				str = localDataInputStream.readLine();				
+			
+				// str2 contains next line - needed to correctly read multilined messages		
+			
+				// if str2 starts with uins - properly add direction and timestamp info
 				if (str2.startsWith(myuin))
 				{
 					localDataOutputStream.writeByte(direction);
@@ -184,6 +175,7 @@ public class ImportHistory {
 					localDataOutputStream.writeLong(timestamp.getTime());
 					
 				}
+				// if str2 starts with uins - properly add direction and timestamp info
 				else if (str2.startsWith(contactuin))
 				{
 					localDataOutputStream.writeByte(direction);
@@ -197,6 +189,7 @@ public class ImportHistory {
 					localDataOutputStream.writeLong(timestamp.getTime());
 				}
 
+				// if str starts with uins - parse data and time info and write it to output stream, along with direction info
 				if (str.startsWith(myuin))
 				{
 					localDataOutputStream.writeByte(0);
@@ -208,13 +201,13 @@ public class ImportHistory {
 						timestamp = df.parse(str.substring(myuin.length()+2, str.length() -1));
 						}
 						localDataOutputStream.writeLong(timestamp.getTime());
-						firstline = false;
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 					
 				}
+				// if str starts with uins - parse data and time info and write it to output stream, along with direction info
 				else if (str.startsWith(contactuin))
 				{
 					localDataOutputStream.writeByte(1);
@@ -225,17 +218,16 @@ public class ImportHistory {
 						timestamp = df.parse(str.substring(contactuin.length()+2, str.length() -1));
 						}
 						localDataOutputStream.writeLong(timestamp.getTime());
-						firstline = false;
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 
+				// if string doesnt start with uin - it's usually a direct message
 				else
 				{
-					// if string doesnt start with uin - it's usually a direct message
-					
+
 					strlen = str.length();
 					
 					if (str != "")
@@ -323,9 +315,6 @@ public class ImportHistory {
 
 				}
 				
-				// set string to "" , forgot why O_o
-				// TODO what happens here?
-				str = "";
 
 			  }
 		} catch (IOException e) {
