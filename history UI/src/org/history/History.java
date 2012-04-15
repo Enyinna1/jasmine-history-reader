@@ -102,7 +102,8 @@ public class History {
 				return findEntry();
 			}
 		});
-			
+		
+		ImportHistoryUI = new ImportHistoryUI(shell);
 		
 		Menu menu = new Menu(shell, SWT.BAR);
 		shell.setMenuBar(menu);
@@ -176,8 +177,7 @@ public class History {
 		mntmImportHistory.addSelectionListener(new SelectionAdapter() {
 			@Override
 			public void widgetSelected(SelectionEvent e) {
-				ImportHistoryUI dlg = new ImportHistoryUI(shell, SWT.CLOSE | SWT.BORDER | SWT.TITLE);
-				dlg.open();
+				ImportHistoryUI.open();
 			}
 		});
 		mntmImportHistory.setText("Import History");
