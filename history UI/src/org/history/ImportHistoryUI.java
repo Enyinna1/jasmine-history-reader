@@ -1,6 +1,8 @@
 package org.history;
 
 
+import java.io.IOException;
+
 import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.*;
@@ -12,6 +14,7 @@ public class ImportHistoryUI {
 	Text importText;
 	Label dirAreaLabel;
 	Button importButton;
+	ImportHistory ImportHistory;
 	ImportListner importHandler;
 	private GridLayout gl_shlImport;
 	private Button btnNewButton;
@@ -97,7 +100,19 @@ public ImportHistoryUI(Shell parent) {
 	importButton.setEnabled(false);
 	importButton.addSelectionListener(new SelectionAdapter() {
 		public void widgetSelected(SelectionEvent e) {
+			String dir = getDirString();
+			String uin = getUInString();
 			
+			ImportHistory hist = new ImportHistory();
+			
+			try {
+				hist.importHistory(uin, dir);
+				
+				History.showMessage("Done.");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	});
 			
