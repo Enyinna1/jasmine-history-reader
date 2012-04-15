@@ -160,7 +160,7 @@ public class ImportHistory {
 				// this cycle is quite weird to understand O_o
 				// TODO refactor and optimize this shit
 				
-				 if string is empty - read new line
+				//if string is empty - read new line
 				if (str == "")
 				{
 				str = localDataInputStream.readLine();
