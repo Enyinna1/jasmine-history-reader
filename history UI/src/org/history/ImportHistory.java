@@ -164,7 +164,7 @@ public class ImportHistory {
 				// str2 contains next line - needed to correctly read multilined messages		
 			
 				// if str2 starts with uins - properly add direction and timestamp info
-				if (str2.startsWith(myuin))
+				if (str2.startsWith(myuin + " ("))
 				{
 					localDataOutputStream.writeByte(direction);
 					localDataOutputStream.writeBoolean(false);
@@ -176,7 +176,7 @@ public class ImportHistory {
 					
 				}
 				// if str2 starts with uins - properly add direction and timestamp info
-				else if (str2.startsWith(contactuin))
+				else if (str2.startsWith(contactuin + " ("))
 				{
 					localDataOutputStream.writeByte(direction);
 					localDataOutputStream.writeBoolean(false);
@@ -190,7 +190,7 @@ public class ImportHistory {
 				}
 
 				// if str starts with uins - parse data and time info and write it to output stream, along with direction info
-				if (str.startsWith(myuin))
+				if (str.startsWith(myuin + " ("))
 				{
 					localDataOutputStream.writeByte(0);
 					localDataOutputStream.writeBoolean(false);
@@ -208,7 +208,7 @@ public class ImportHistory {
 					
 				}
 				// if str starts with uins - parse data and time info and write it to output stream, along with direction info
-				else if (str.startsWith(contactuin))
+				else if (str.startsWith(contactuin + " ("))
 				{
 					localDataOutputStream.writeByte(1);
 					localDataOutputStream.writeBoolean(false);
@@ -249,7 +249,7 @@ public class ImportHistory {
 						}
 
 						// if str2 starts with uin - store direction and timestamp in global variables because its a new message and we need to process it later )
-						if ( str2.startsWith(myuin))
+						if ( str2.startsWith(myuin + " ("))
 						{
 							try {
 								direction = 0;
@@ -262,7 +262,7 @@ public class ImportHistory {
 						}
 						
 						// if str2 starts with uin - store direction and timestamp in global variables because its a new message and we need to process it later )
-						else if (str2.startsWith(contactuin))
+						else if (str2.startsWith(contactuin + " ("))
 						{
 							try {
 								direction = 1;
@@ -283,7 +283,7 @@ public class ImportHistory {
 							}
 							
 							// if str2 start with uin - stop
-							if (str2.startsWith(myuin) || str2.startsWith(contactuin))
+							if (str2.startsWith(myuin + " (") || str2.startsWith(contactuin + " ("))
 							{
 								break;
 							}
