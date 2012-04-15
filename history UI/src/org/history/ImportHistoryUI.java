@@ -65,6 +65,10 @@ public ImportHistoryUI(Shell parent) {
 			dlg.setText("Import History");
 			dlg.setFilterPath("C:/");
 			String selected = dlg.open();
+			if (selected == null) {
+				return;
+			}
+			
 			importText.setText(selected);
 			
 		}
@@ -111,6 +115,7 @@ public ImportHistoryUI(Shell parent) {
 				History.showMessage("Done.");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
+				History.showMessage("Import Failed");
 				e1.printStackTrace();
 			}
 		}
