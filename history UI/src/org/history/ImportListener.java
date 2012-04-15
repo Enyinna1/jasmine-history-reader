@@ -1,6 +1,6 @@
 package org.history;
 
-public interface ImportListner {
+public interface ImportListener {
 
 	public boolean importHist();
 }

@@ -15,7 +15,7 @@ public class ImportHistoryUI {
 	Label dirAreaLabel;
 	Button importButton;
 	ImportHistory ImportHistory;
-	ImportListner importHandler;
+	ImportListener importHandler;
 	private GridLayout gl_shlImport;
 	private Button btnNewButton;
 	private Label lblNewLabel;
@@ -152,7 +152,7 @@ public void open() {
 	importText.setFocus();
 }
 
-public void addImportListener(ImportListner listener) {
+public void addImportListener(ImportListener listener) {
 	this.importHandler = listener;	
 }
 
