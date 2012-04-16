@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class ImportHistory {
+	
+	static DateDialog DateDialog;
 
 	/**
 	 * @param args
@@ -139,6 +141,8 @@ public class ImportHistory {
 			InputStream localFile, DataOutputStream localDataOutputStream) throws ParseException {
 		BufferedReader localDataInputStream;
 		
+		DateDialog = new DateDialog(History.shell);
+		
 		// read local .txt history file
 		localDataInputStream = new BufferedReader(new InputStreamReader(localFile));
 		  try {
@@ -254,6 +258,19 @@ public class ImportHistory {
 							try {
 								direction = 0;
 								timestamp = df.parse(str2.substring(myuin.length()+2, str2.length() -1));
+								
+								if (timestamp.getTime() > 1577826000000L || timestamp.getTime() < 946674000000L )
+								{
+									// TODO complete this
+									
+									
+									
+									//History.showMessage("Timestamp error");
+									
+									DateDialog.setWrongTimestamp(str2);
+									DateDialog.setWrongDate(str2, myuin);
+									DateDialog.open();
+								}
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
@@ -267,6 +284,18 @@ public class ImportHistory {
 							try {
 								direction = 1;
 								timestamp = df.parse(str2.substring(contactuin.length()+2, str2.length() -1));
+								
+								if (timestamp.getTime() > 1577826000000L || timestamp.getTime() < 946674000000L )
+								{
+									// TODO complete this
+									//History.showMessage("Timestamp error");
+									
+									DateDialog.setWrongTimestamp(str2);
+									DateDialog.setWrongDate(str2, contactuin);
+									DateDialog.open();
+								
+									
+								}
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();

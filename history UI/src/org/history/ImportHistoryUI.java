@@ -26,6 +26,7 @@ public class ImportHistoryUI {
  *  @param parent	Shell 
  *			The shell that is the parent of the dialog.
  */
+	
 public ImportHistoryUI(Shell parent) {
 	shlImport = new Shell(parent, SWT.DIALOG_TRIM);
 	shlImport.setSize(345, 260);

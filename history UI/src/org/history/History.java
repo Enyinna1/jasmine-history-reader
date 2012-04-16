@@ -343,6 +343,7 @@ public class History {
 		 });
 		
 		styledText = new StyledText(shell, SWT.BORDER | SWT.H_SCROLL | SWT.V_SCROLL);
+		styledText.setEditable(false);
 		styledText.setWordWrap(!styledText.getWordWrap());
 		styledText.setLayoutData(new GridData(SWT.FILL, SWT.FILL, true, true, 1, 1));
 		
