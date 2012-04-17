@@ -14,6 +14,9 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+
 public class ImportHistory {
 	
 	static DateDialog DateDialog;
@@ -141,8 +144,6 @@ public class ImportHistory {
 			InputStream localFile, DataOutputStream localDataOutputStream) throws ParseException {
 		BufferedReader localDataInputStream;
 		
-		DateDialog = new DateDialog(History.shell);
-		
 		// read local .txt history file
 		localDataInputStream = new BufferedReader(new InputStreamReader(localFile));
 		  try {
@@ -176,6 +177,21 @@ public class ImportHistory {
 					{
 					timestamp = df.parse(str2.substring(myuin.length()+2, str2.length() -1));
 					}
+					
+					if (timestamp.getTime() > 1577826000000L || timestamp.getTime() < 946674000000L )
+					{
+						// TODO complete this
+						
+						DateDialog = new DateDialog(History.shell);
+															
+						DateDialog.setWrongTimestamp(str2);
+						DateDialog.setWrongDate(str2);
+						DateDialog.setCorrectTimestamp(str2);
+						str2 = DateDialog.open();
+						
+						timestamp = df.parse(str2.substring(myuin.length()+2, str2.length() -1));
+					}
+					
 					localDataOutputStream.writeLong(timestamp.getTime());
 					
 				}
@@ -188,6 +204,22 @@ public class ImportHistory {
 						
 					{
 					timestamp = df.parse(str2.substring(myuin.length()+2, str2.length() -1));
+					}
+					
+					if (timestamp.getTime() > 1577826000000L || timestamp.getTime() < 946674000000L )
+					{
+						// TODO complete this
+
+						DateDialog = new DateDialog(History.shell);
+						
+						DateDialog.setWrongTimestamp(str2);
+						DateDialog.setWrongDate(str2);
+						DateDialog.setCorrectTimestamp(str2);
+						str2 = DateDialog.open();
+					
+						
+						
+						timestamp = df.parse(str2.substring(contactuin.length()+2, str2.length() -1));
 					}
 					
 					localDataOutputStream.writeLong(timestamp.getTime());
@@ -204,6 +236,21 @@ public class ImportHistory {
 						{
 						timestamp = df.parse(str.substring(myuin.length()+2, str.length() -1));
 						}
+						
+						if (timestamp.getTime() > 1577826000000L || timestamp.getTime() < 946674000000L )
+						{
+							// TODO complete this
+							
+							DateDialog = new DateDialog(History.shell);
+																
+							DateDialog.setWrongTimestamp(str2);
+							DateDialog.setWrongDate(str2);
+							DateDialog.setCorrectTimestamp(str2);
+							str2 = DateDialog.open();
+							
+							timestamp = df.parse(str2.substring(myuin.length()+2, str2.length() -1));
+						}
+						
 						localDataOutputStream.writeLong(timestamp.getTime());
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
@@ -221,6 +268,23 @@ public class ImportHistory {
 						{
 						timestamp = df.parse(str.substring(contactuin.length()+2, str.length() -1));
 						}
+						
+						if (timestamp.getTime() > 1577826000000L || timestamp.getTime() < 946674000000L )
+						{
+							// TODO complete this
+
+							DateDialog = new DateDialog(History.shell);
+							
+							DateDialog.setWrongTimestamp(str2);
+							DateDialog.setWrongDate(str2);
+							DateDialog.setCorrectTimestamp(str2);
+							str2 = DateDialog.open();
+						
+							
+							
+							timestamp = df.parse(str2.substring(contactuin.length()+2, str2.length() -1));
+						}
+						
 						localDataOutputStream.writeLong(timestamp.getTime());
 					} catch (ParseException e) {
 						// TODO Auto-generated catch block
@@ -263,13 +327,14 @@ public class ImportHistory {
 								{
 									// TODO complete this
 									
-									
-									
-									//History.showMessage("Timestamp error");
-									
+									DateDialog = new DateDialog(History.shell);
+																		
 									DateDialog.setWrongTimestamp(str2);
-									DateDialog.setWrongDate(str2, myuin);
-									DateDialog.open();
+									DateDialog.setWrongDate(str2);
+									DateDialog.setCorrectTimestamp(str2);
+									str2 = DateDialog.open();
+									
+									timestamp = df.parse(str2.substring(myuin.length()+2, str2.length() -1));
 								}
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block
@@ -288,13 +353,17 @@ public class ImportHistory {
 								if (timestamp.getTime() > 1577826000000L || timestamp.getTime() < 946674000000L )
 								{
 									// TODO complete this
-									//History.showMessage("Timestamp error");
+
+									DateDialog = new DateDialog(History.shell);
 									
 									DateDialog.setWrongTimestamp(str2);
-									DateDialog.setWrongDate(str2, contactuin);
-									DateDialog.open();
+									DateDialog.setWrongDate(str2);
+									DateDialog.setCorrectTimestamp(str2);
+									str2 = DateDialog.open();
 								
 									
+									
+									timestamp = df.parse(str2.substring(contactuin.length()+2, str2.length() -1));
 								}
 							} catch (ParseException e) {
 								// TODO Auto-generated catch block

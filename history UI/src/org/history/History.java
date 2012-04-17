@@ -313,7 +313,7 @@ public class History {
 		gd_list.widthHint = 87;
 		gd_list.heightHint = 717;
 		
-		uinList = new List(shell, SWT.BORDER);
+		uinList = new List(shell, SWT.BORDER | SWT.V_SCROLL);
 		uinList.setLayoutData(gd_list);
 		uinList.addListener(SWT.Selection, new Listener () {
 			

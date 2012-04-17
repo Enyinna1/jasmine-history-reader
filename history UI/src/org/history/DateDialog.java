@@ -29,6 +29,8 @@ public class DateDialog  {
 	private Text text_1;
 	private Text text_2;
 	public boolean Done = false;
+	private Label lblCorrectTimestampIs;
+	private String correctline;
 
 /**
  * Class constructor that sets the parent shell and the styledText widget that
@@ -68,6 +70,8 @@ public DateDialog(Shell parent) {
 		public void modifyText(ModifyEvent e) {
 			boolean enableFind = (searchText.getCharCount() != 0);
 			findButton.setEnabled(enableFind);
+			
+			setWrongDate(searchText.getText());
 		}
 	});
 	
@@ -82,18 +86,29 @@ public DateDialog(Shell parent) {
 	searchAreaLabel = new Label(shlSearch, SWT.LEFT);
 	new Label(shlSearch, SWT.NONE);
 	
+	lblCorrectTimestampIs = new Label(shlSearch, SWT.NONE);
+	lblCorrectTimestampIs.setFont(SWTResourceManager.getFont("Segoe UI", 9, SWT.BOLD));
+	lblCorrectTimestampIs.setLayoutData(new GridData(SWT.LEFT, SWT.CENTER, false, false, 2, 1));
+	lblCorrectTimestampIs.setText("Correct timestamp is HH:mm:ss dd/MM/yyyy");
+	
 	lblNewTimestamp = new Label(shlSearch, SWT.NONE);
 	lblNewTimestamp.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 	lblNewTimestamp.setText("New timestamp:");
 	
 	text = new Text(shlSearch, SWT.BORDER);
 	text.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
+	text.addModifyListener(new ModifyListener() {
+		public void modifyText(ModifyEvent arg0) {
+			setCorrectDate(text.getText());
+		}
+	});
 	
 	lblCorrectData = new Label(shlSearch, SWT.NONE);
 	lblCorrectData.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
 	lblCorrectData.setText("Correct Data:");
 	
 	text_2 = new Text(shlSearch, SWT.BORDER);
+
 	text_2.setEnabled(false);
 	text_2.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false, 1, 1));
 
@@ -112,7 +127,8 @@ public DateDialog(Shell parent) {
 	findButton.setEnabled(false);
 	findButton.addSelectionListener(new SelectionAdapter() {
 		public void widgetSelected(SelectionEvent e) {
-				Done = true;		
+			
+			shlSearch.dispose();	
 		}
 	});
 			
@@ -128,7 +144,7 @@ public DateDialog(Shell parent) {
 	shlSearch.pack();
 }
 
-public void open() {
+public String open() {
 	if (shlSearch.isVisible()) {
 		shlSearch.setFocus();
 	} else {
@@ -141,24 +157,53 @@ public void open() {
 	        display.sleep();
 	    }
 	}
+	return correctline;
 }
 
 public void setWrongTimestamp(String text) {
 	searchText.setText(text);
 }
 
-public void setWrongDate(String text,String myuin) {
+public void setCorrectTimestamp(String text) {
+	this.text.setText(text);
+}
+
+public String getCorrectTimestamp() {
+	return this.text.getText();
+}
+
+public void setWrongDate(String text) {
 	DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
 	Date timestamp = null;
 	try {
-		timestamp = df.parse(text.substring(myuin.length()+2, text.length() -1));
+		timestamp = df.parse(text.substring(text.length()-20, text.length() -1));
+		text_1.setText(df.format(timestamp));
 	} catch (ParseException e) {
 		// TODO Auto-generated catch block
+		text_1.setText("Wrong date format");
 		e.printStackTrace();
 	}
 	
 	
-	text_1.setText(df.format(timestamp));
+
+}
+
+public void setCorrectDate(String text) {
+	DateFormat df = new SimpleDateFormat("HH:mm:ss dd/MM/yyyy");
+	Date timestamp = null;
+	try {
+		timestamp = df.parse(text.substring(text.length()-20, text.length() -1));
+		text_2.setText(df.format(timestamp));
+		
+		correctline = this.text.getText();
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		text_2.setText("Wrong date format");
+		e.printStackTrace();
+	}
+	
+	
+
 }
 
 
