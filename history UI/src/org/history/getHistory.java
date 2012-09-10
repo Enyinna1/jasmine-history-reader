@@ -98,16 +98,16 @@ public class getHistory {
 			            messageContainer.isXtrazMessage = bool;
 			            
 			            // debug
-						if (messageContainer.direction == 1)
-						 {
-							System.out.println(messageContainer.contactuin + " " + "(" + getHistory.formatDate(messageContainer.date) +")");
-							System.out.println(messageContainer.message);
-						 }
-						 else
-						 {
-							 System.out.println(messageContainer.myuin + " " + "(" + getHistory.formatDate(messageContainer.date) +")");
-							 System.out.println(messageContainer.message);
-						 }
+//						if (messageContainer.direction == 1)
+//						 {
+//							System.out.println(messageContainer.contactuin + " " + "(" + getHistory.formatDate(messageContainer.date) +")");
+//							System.out.println(messageContainer.message);
+//						 }
+//						 else
+//						 {
+//							 System.out.println(messageContainer.myuin + " " + "(" + getHistory.formatDate(messageContainer.date) +")");
+//							 System.out.println(messageContainer.message);
+//						 }
 						
 			            localVector2.add(messageContainer);
 			    		uhst = uhst + 14 + j;

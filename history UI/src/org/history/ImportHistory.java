@@ -304,8 +304,8 @@ public class ImportHistory {
 						str2 = localDataInputStream.readLine();
 
 						// debug
-						System.out.println(str);
-						System.out.println(str2);
+//						System.out.println(str);
+//						System.out.println(str2);
 						
 						// if str2 = null -> EOF - write all info to output stream
 						if (str2 == null)
