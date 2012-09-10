@@ -1,0 +1,3 @@
+Simple program to read history files, exported from Jasmine ( Android program ). This is outdated version, because latest jasmine uses different history format, maybe i'll look into this later
+
+Expect some bad code, this is done with almost no knowledge in java and SWT.
