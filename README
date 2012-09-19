@@ -1,3 +1,5 @@
-Simple program to read history files, exported from Jasmine ( Android program ). This is outdated version, because latest jasmine uses different history format, maybe i'll look into this later
+Simple program to read history files, exported from Jasmine ( Android program ). Currently program supports old format ( .jpha ) and new format ( .jha2 ).
+
+Program can export history to text files, and import text files to jasmine history format ( this is quite hard to do ). For now. import only supported for old JPHA format.
 
 Expect some bad code, this is done with almost no knowledge in java and SWT.
