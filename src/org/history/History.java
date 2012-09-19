@@ -124,7 +124,7 @@ public class History {
 		        FileDialog fd = new FileDialog(shell, SWT.OPEN);
 		        fd.setText("Open");
 		        fd.setFilterPath("C:/");
-		        String[] filterExt = { "*.jpha","*.*" };
+		        String[] filterExt = {"*.jha2","*.jpha","*.*" };
 		        fd.setFilterExtensions(filterExt);
 		        String selected = fd.open();
 		          
@@ -139,11 +139,22 @@ public class History {
 		          
 		        Vector[] result = null;
 				try {
-					result = getHistory.processHistory(selected);
+					if (selected.contains("jpha"))
+					{
+						result = getHistory.processHistoryJPHA(selected);
+					}
+					else
+					{
+						result = getHistory.processHistoryJHA2(selected);
+					}
+					
 				} catch (IOException e1) {
 					showMessage("Wrong file type.");
 					e1.printStackTrace();
 					return;
+				} catch (Exception e2) {
+					showMessage("Wrong file type.");
+					e2.printStackTrace();
 				}
 				// result[0] contains history from cache file.
 				historyVector = result[1];		
