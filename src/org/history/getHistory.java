@@ -4,6 +4,7 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -230,9 +231,6 @@ public class getHistory {
 		        	  // proccessing hst file. Just like previous one.
 		        	  int lengthhst = localDataInputStream.readInt();
 		        	  
-		        	  // all hst files starts with UNI - skip this 3 bytes
-		        	  localDataInputStream.skip(3L);
-		        	  
 		        	  // there are many hst files with only UNI string in it - so we skip it
 		        	  if (lengthhst == 0x03)
 		        	  {		     		  
@@ -242,10 +240,30 @@ public class getHistory {
 		        	  // u stores the number of bytes read. Add 3 skipped bytes
 		        	  int uhst = 3;
 		        	  
+		        	  // recieved/sent message flag if normal or it will be 55 ( ASCII "U" ) if hst starts with UNI
+		        	  JHA = false;
 		        	  while(uhst < lengthhst)
 		        	  {
 		        		// recieved/sent message flag
 			        	int i = localDataInputStream.readByte();
+			        	
+		        	    if ( i == 0x55 || JHA == true)
+		        	    {
+		        	    	if ( JHA == false )
+		        	    	{
+		        	    		// this will run only once in the beginning if cache starts with UNI
+		        	    		
+		        	    		// if cache starts with U - skip next 2 bytes ( NI )
+		        	    		localDataInputStream.skip(2L);
+		        	    		// read recieved/sent message flag
+			        	    	i = localDataInputStream.readByte();	
+			        	    	// set number of readen bytes to 3 ( because of UNI header )
+		        	    		u = 3;
+		        	    		//  set flag to true
+		        	    		JHA = true;
+		        	    	}
+		        	    }
+			        	
 			        	//  xtraz flag
 				        boolean bool = localDataInputStream.readBoolean();
 				        localDataInputStream.readInt();
@@ -344,7 +362,6 @@ public class getHistory {
 				      localStringBuilder.append((char)(InputStream.readByte() | k << 8));
 				    }
 				  }
-
 	
 	public static String formatDate(long l) {
 		Date d = new Date(l);
