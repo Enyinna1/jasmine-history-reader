@@ -7,6 +7,7 @@ import org.eclipse.swt.*;
 import org.eclipse.swt.widgets.*;
 import org.eclipse.swt.layout.*;
 import org.eclipse.swt.events.*;
+import org.eclipse.swt.custom.CLabel;
 
 public class ImportHistoryUI {
 
@@ -20,6 +21,8 @@ public class ImportHistoryUI {
 	private Button btnNewButton;
 	private Label lblNewLabel;
 	private Text text;
+	private CLabel lblType;
+	private Combo combo;
 
 /**
  * 
@@ -29,7 +32,7 @@ public class ImportHistoryUI {
 	
 public ImportHistoryUI(Shell parent) {
 	shlImport = new Shell(parent, SWT.DIALOG_TRIM);
-	shlImport.setSize(345, 260);
+	shlImport.setSize(348, 226);
 	GridLayout layout;
 	gl_shlImport = new GridLayout();
 	gl_shlImport.numColumns = 3;
@@ -87,6 +90,18 @@ public ImportHistoryUI(Shell parent) {
 	gd_text.widthHint = 123;
 	text.setLayoutData(gd_text);
 	new Label(shlImport, SWT.NONE);
+	
+	lblType = new CLabel(shlImport, SWT.NONE);
+	lblType.setLayoutData(new GridData(SWT.RIGHT, SWT.CENTER, false, false, 1, 1));
+	lblType.setText("Type:");
+	
+	combo = new Combo(shlImport, SWT.NONE);
+	combo.setItems(new String[] {"JHA2", "JPHA"});
+	GridData gd_combo = new GridData(SWT.LEFT, SWT.CENTER, true, false, 1, 1);
+	gd_combo.widthHint = 34;
+	combo.setLayoutData(gd_combo);
+	combo.select(0);
+	new Label(shlImport, SWT.NONE);
 
 	Composite composite = new Composite(shlImport, SWT.NONE);
 	gridData = new GridData(GridData.HORIZONTAL_ALIGN_FILL);
@@ -109,13 +124,25 @@ public ImportHistoryUI(Shell parent) {
 			ImportHistory hist = new ImportHistory();
 			
 			try {
-				hist.importHistory(uin, dir);
+				
+				if (combo.getText().equals("JPHA"))
+				{
+					hist.importHistoryJPHA(uin, dir);
+				}
+				else 
+				{
+					hist.importHistoryJHA2(uin, dir);
+				}
 				
 				History.showMessage("Done.");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				History.showMessage("Import Failed");
 				e1.printStackTrace();
+			} catch (Exception e2) {
+				// TODO Auto-generated catch block
+				History.showMessage("Import Failed");
+				e2.printStackTrace();
 			}
 		}
 	});

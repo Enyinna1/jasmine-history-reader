@@ -237,8 +237,8 @@ public class getHistory {
 		        		  continue;
 		        	  }
 		        	  
-		        	  // u stores the number of bytes read. Add 3 skipped bytes
-		        	  int uhst = 3;
+		        	  // u stores the number of bytes read.
+		        	  int uhst = 0;
 		        	  
 		        	  // recieved/sent message flag if normal or it will be 55 ( ASCII "U" ) if hst starts with UNI
 		        	  JHA = false;
