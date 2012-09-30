@@ -258,7 +258,7 @@ public class getHistory {
 		        	    		// read recieved/sent message flag
 			        	    	i = localDataInputStream.readByte();	
 			        	    	// set number of readen bytes to 3 ( because of UNI header )
-		        	    		u = 3;
+		        	    		uhst = 3;
 		        	    		//  set flag to true
 		        	    		JHA = true;
 		        	    	}
