@@ -33,7 +33,7 @@ jar {
     new ByteArrayOutputStream().withStream { execOS ->
         def result = exec {
             executable = 'git'
-            args = [ 'describe']
+            args = [ 'describe','--tags','--abbrev=0']
             standardOutput = execOS
         }
         // calculate version information
