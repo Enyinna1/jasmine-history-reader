@@ -1,0 +1,71 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'launch4j'
+
+archivesBaseName = 'jhr-x64'
+
+// Version of build. Based on cureent git tag. Sets in Jar task.
+def buildVersion = ''
+
+repositories {
+    flatDir { dir 'lib' }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/'
+            }
+        }
+}
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile name: "swt64"
+}
+
+jar {
+    new ByteArrayOutputStream().withStream { execOS ->
+        def result = exec {
+            executable = 'git'
+            args = [ 'describe']
+            standardOutput = execOS
+        }
+        // calculate version information
+        def buildversion = execOS.toString().trim()
+        
+        version buildversion
+        }
+
+    buildVersion = version
+    from files(sourceSets.main.output.classesDir)
+    from configurations.runtime.asFileTree.files.collect { zipTree(it) }
+
+    manifest {
+        attributes 'Main-Class': 'org.history.History'
+    }
+}
+
+launch4j {
+    mainClassName = "org.history.History"
+    jar = "lib/"+project.tasks[JavaPlugin.JAR_TASK_NAME].outputs.files.getSingleFile().name 
+    outfile = archivesBaseName+'-'+buildVersion+'.exe'
+}
+
+buildscript {
+    repositories {
+        ivy {
+            artifactPattern 'http://gradle-launch4j.googlecode.com/files/[module]-[revision].[ext]'
+        }
+    }
+
+    dependencies {
+        classpath 'edu.sc.seis:gradle-launch4j:1.0.4'
+    }
+}
+
