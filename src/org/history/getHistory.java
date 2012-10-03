@@ -4,12 +4,9 @@ import java.io.DataInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.nio.ByteBuffer;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Vector;
 
 public class getHistory {
@@ -50,28 +47,13 @@ public class getHistory {
 		        	  // u will store number of bytes read
 		        	  while(u < length)
 		        	  {
-		        		// recieved/sent message flag
-		        	    int i = localDataInputStream.readByte();
-		        	    //  xtraz flag
-			            boolean bool = localDataInputStream.readBoolean();
-			            // data and time in unixtime format
-			            long l = localDataInputStream.readLong();
-			            // length of string
+		        	    // we can just skip cache because all info in cache already in hst file
+		        	    	
+		        	    // skip xtraz, recieved flag, 8 bytes of data
+		        		localDataInputStream.skip(10L);
+		        		// length of string
 			            int j = localDataInputStream.readInt();
-			            // byte array with string
-			            byte[] arrayOfByte = new byte[j];
-			            localDataInputStream.read(arrayOfByte, 0, j);
-			            String str2 = new String(arrayOfByte, "windows-1251");
-			            HistoryItem messageContainer = new HistoryItem();
-			            messageContainer.myuin = uin;
-			            messageContainer.contactuin = contactuin.toString();
-			            messageContainer.direction = i;
-			            messageContainer.confirmed = true;
-			            messageContainer.message = str2;
-			            messageContainer.date = l;
-			            messageContainer.isXtrazMessage = bool;
-			            localVector.add(messageContainer);
-			    		// 14 = int+bool+long+int(1+1+8+4). j - number of bytes in string array
+			            localDataInputStream.skip(j);
 			    		u = u + 14 + j;
 			    		
 		        	  }
@@ -86,8 +68,7 @@ public class getHistory {
 			            int j = localDataInputStream.readInt();
 			            byte[] arrayOfByte = new byte[j];
 			            localDataInputStream.read(arrayOfByte, 0, j);
-			            String str2 = new String(arrayOfByte, "windows-1251");
-			            
+			            String str2 = new String(arrayOfByte, "windows-1251");			            
 
 			            HistoryItem messageContainer = new HistoryItem();
 			            messageContainer.contactuin = contactuin.toString();
@@ -96,19 +77,7 @@ public class getHistory {
 			            messageContainer.confirmed = true;
 			            messageContainer.message = str2;
 			            messageContainer.date = l;
-			            messageContainer.isXtrazMessage = bool;
-			            
-			            // debug
-//						if (messageContainer.direction == 1)
-//						 {
-//							System.out.println(messageContainer.contactuin + " " + "(" + getHistory.formatDate(messageContainer.date) +")");
-//							System.out.println(messageContainer.message);
-//						 }
-//						 else
-//						 {
-//							 System.out.println(messageContainer.myuin + " " + "(" + getHistory.formatDate(messageContainer.date) +")");
-//							 System.out.println(messageContainer.message);
-//						 }
+			            messageContainer.isXtrazMessage = bool;			          
 						
 			            localVector2.add(messageContainer);
 			    		uhst = uhst + 14 + j;
@@ -174,56 +143,28 @@ public class getHistory {
 			        	    		//  set flag to true
 			        	    		JHA = true;
 			        	    	}
-		        	    				        	    	
-			        	    	//  xtraz flag
-						        boolean bool = localDataInputStream.readBoolean();
-						        // unused bytes
-						        localDataInputStream.readInt();
-						        // data and time in unixtime format
-						        long l = localDataInputStream.readLong();
+			        	    	
+			        	    	// we can just skip cache because all info in cache already in hst file
+			        	    	
+			        	    	// skip xtraz flag, unused Int, 8 bytes of data
+			        	    	localDataInputStream.skip(13L);
 						        // length of string
 						        int j = localDataInputStream.readInt();
-						        // if cache starts with UNI - all strings are unicode, so we use different method
-						        String str2 = readString(localDataInputStream, j);
-						        
-					            HistoryItem messageContainer = new HistoryItem();
-					            messageContainer.myuin = uin;
-					            messageContainer.contactuin = contactuin.toString();
-					            messageContainer.direction = i;
-					            messageContainer.confirmed = true;
-					            messageContainer.message = str2;
-					            System.out.println(str2);
-					            messageContainer.date = l;
-					            messageContainer.isXtrazMessage = bool;
-					            localVector.add(messageContainer);
-					    		// 18 = int+bool+long+int+int(1+1+8+4+4). j - number of bytes in string array
+						        localDataInputStream.skip(j);
 					    		u = u + 18 + j;
 			        	    }
 			        	    else
 			        	    {
+			        	    	// we can just skip cache because all info in cache already in hst file
+			        	    	
 			        	    	// is cache is normal and doesnt start with UNI
 			        	    	
-			        	    	boolean bool = localDataInputStream.readBoolean();
-			        	    	// data and time in unixtime format
-			        	    	long l = localDataInputStream.readLong();
+			        	    	// skip xtraz flag, 8 bytes of data
+			        	    	localDataInputStream.skip(9L);
+
 			        	    	// length of string
 			        	    	int j = localDataInputStream.readInt();
-			        	    	// byte array with string
-			        	    	byte[] arrayOfByte = new byte[j];
-			        	    	localDataInputStream.read(arrayOfByte, 0, j);
-			        	    	String str2 = new String(arrayOfByte, "windows-1251");
-			        	    
-			        	    	HistoryItem messageContainer = new HistoryItem();
-			        	    	messageContainer.myuin = uin;
-			        	    	messageContainer.contactuin = contactuin.toString();
-			        	    	messageContainer.direction = i;
-				            	messageContainer.confirmed = true;
-				            	messageContainer.message = str2;
-				            	System.out.println(str2);
-				            	messageContainer.date = l;
-				            	messageContainer.isXtrazMessage = bool;
-				          	  	localVector.add(messageContainer);
-				          	  	// 14 = int+bool+long+int(1+1+8+4). j - number of bytes in string array
+			        	    	localDataInputStream.skip(j);
 				          	  	u = u + 14 + j;
 			        	    }
 		        	  }
